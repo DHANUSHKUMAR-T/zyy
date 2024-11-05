@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Report</title>
+    <style>
+        body {
+            background-color: #E6E6FA;
+            font-family: Arial, sans-serif;
+            color: #4B0082;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #4B0082;
+            margin-bottom: 30px;
+        }
+        .scan-section {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #FFF;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            max-width: 600px; /* Limit width for better alignment */
+        }
+        .scan-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: center; /* Center the headings */
+        }
+        .upload-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .upload-button {
+            background-color: #9370DB;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        .upload-button:hover {
+            background-color: #8A2BE2;
+        }
+        .upload-instructions {
+            margin: 10px 0;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .file-input {
+            margin-bottom: 10px;
+        }
+        .upload-all-button {
+            background-color: #4B0082;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            margin-top: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .upload-all-button:hover {
+            background-color: #6A5ACD;
+        }
+        .back-button {
+            margin-top: 20px;
+            background-color: #D8BFD8;
+            color: #4B0082;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #9370DB;
+        }
+    </style>
+</head>
+<body>
+    <h1>Scan Reports</h1>
+
+    <!-- CT Scan Section -->
+    <div class="scan-section">
+        <div class="scan-title">CT Scan</div>
+        <div class="upload-container">
+            <label for="ctScanUpload">Choose Scan Picture:</label>
+            <input type="file" id="ctScanUpload" accept="application/pdf,image/*">
+            <button class="upload-button">Upload</button>
+        </div>
+        <div class="upload-instructions">Upload the scan picture report as a PDF or image file.</div>
+        
+        <div class="upload-container">
+            <label for="ctScanWrittenCopy">Choose Written Copy:</label>
+            <input type="file" id="ctScanWrittenCopy" accept="application/pdf,image/*">
+            <button class="upload-button">Upload</button>
+        </div>
+    </div>
+
+    <!-- MRI Scan Section -->
+    <div class="scan-section">
+        <div class="scan-title">MRI Scan</div>
+        <div class="upload-container">
+            <label for="mriScanUpload">Choose Scan Picture:</label>
+            <input type="file" id="mriScanUpload" accept="application/pdf,image/*">
+            <button class="upload-button">Upload</button>
+        </div>
+        <div class="upload-instructions">Upload the scan picture report as a PDF or image file.</div>
+        
+        <div class="upload-container">
+            <label for="mriWrittenCopy">Choose Written Copy:</label>
+            <input type="file" id="mriWrittenCopy" accept="application/pdf,image/*">
+            <button class="upload-button">Upload</button>
+        </div>
+    </div>
+
+    <!-- X-Ray Section -->
+    <div class="scan-section">
+        <div class="scan-title">X-Ray</div>
+        <div class="upload-container">
+            <label for="xrayUpload">Choose Scan Picture:</label>
+            <input type="file" id="xrayUpload" accept="application/pdf,image/*">
+            <button class="upload-button">Upload</button>
+        </div>
+        <div class="upload-instructions">Upload the scan picture report as a PDF or image file.</div>
+        
+        <div class="upload-container">
+            <label for="xrayWrittenCopy">Choose Written Copy:</label>
+            <input type="file" id="xrayWrittenCopy" accept="application/pdf,image/*">
+            <button class="upload-button">Upload</button>
+        </div>
+    </div>
+
+    <!-- PET Scan Section -->
+    <div class="scan-section">
+        <div class="scan-title">PET Scan</div>
+        <div class="upload-container">
+            <label for="petScanUpload">Choose Scan Picture:</label>
+            <input type="file" id="petScanUpload" accept="application/pdf,image/*">
+            <button class="upload-button">Upload</button>
+        </div>
+        <div class="upload-instructions">Upload the scan picture report as a PDF or image file.</div>
+        
+        <div class="upload-container">
+            <label for="petWrittenCopy">Choose Written Copy:</label>
+            <input type="file" id="petWrittenCopy" accept="application/pdf,image/*">
+            <button class="upload-button">Upload</button>
+        </div>
+    </div>
+
+    <!-- ECG Scan Section -->
+    <div class="scan-section">
+        <div class="scan-title">ECG Scan</div>
+        <div class="upload-container">
+            <label for="ecgScanUpload">Choose Scan Picture:</label>
+            <input type="file" id="ecgScanUpload" accept="application/pdf,image/*">
+            <button class="upload-button">Upload</button>
+        </div>
+        <div class="upload-instructions">Upload the scan picture report as a PDF or image file.</div>
+        
+        <div class="upload-container">
+            <label for="ecgWrittenCopy">Choose Written Copy:</label>
+            <input type="file" id="ecgWrittenCopy" accept="application/pdf,image/*">
+            <button class="upload-button">Upload</button>
+        </div>
+    </div>
+
+    <!-- Upload All Reports Button -->
+    <button class="upload-all-button" onclick="uploadAllReports()">Upload All Reports</button>
+
+    <!-- Back to Patient Database Button -->
+    <button class="back-button" onclick="goBack()">Back to Patient Database</button>
+
+    <script>
+        function toggleDropdown(id) {
+            const content = document.getElementById(id);
+            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function uploadAllReports() {
+            alert("All reports uploaded successfully!");
+            // Here you would typically handle the file uploads
+            window.location.href = "index.html"; // Redirect back to the home page
+        }
+
+        function goBack() {
+            window.location.href = "patient_database.html"; // Redirect to the Patient Database page
+        }
+    </script>
+</body>
+</html>

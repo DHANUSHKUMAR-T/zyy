@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Database</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #E6E6FA, #D8BFD8);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4B0082;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            color: #4B0082;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .description {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #DDD;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #9370DB;
+            color: white;
+            font-weight: bold;
+        }
+
+        td input, td select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #CCC;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        td input:focus, td select:focus {
+            border-color: #6A5ACD;
+            outline: none;
+        }
+
+        .scan-report-button {
+            background-color: #9370DB;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            font-size: 1em;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .scan-report-button:hover {
+            background-color: #8A2BE2;
+            transform: scale(1.05);
+        }
+
+        .searchable-dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #CCC;
+            box-sizing: border-box;
+        }
+
+        .dropdown-list {
+            position: absolute;
+            background: white;
+            border: 1px solid #CCC;
+            z-index: 1000;
+            max-height: 150px;
+            overflow-y: auto;
+            width: 100%;
+            display: none;
+            margin-top: 2px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-item {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .selected-medications {
+            margin-top: 20px;
+        }
+
+        .selected-medications table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .selected-medications th, .selected-medications td {
+            border: 1px solid #DDD;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>PATIENT DATABASE</h1>
+
+    <div class="description">
+        <p>This database allows for tracking patient visits, including the purpose of each visit, diagnosis, and prescription details.</p>
+        <p>Please fill out the information below.</p>
+    </div>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Hospital Name</th>
+            <th>Hospital Address</th>
+            <th>Doctor ID</th>
+            <th>Purpose of Visit</th>
+            <th>Diagnosis</th>
+            <th>Medications</th>
+            <th>Quantity</th>
+        </tr>
+        <tr>
+            <td><input type="date" required></td>
+            <td><input type="text" placeholder="Enter hospital name" required></td>
+            <td><input type="text" placeholder="Enter hospital address" required></td>
+            <td><input type="text" placeholder="Enter doctor ID" required></td>
+            <td>
+                <select required>
+                    <option value="">Select purpose</option>
+                    <option>Check-up</option>
+                    <option>Emergency</option>
+                    <option>Follow-up</option>
+                    <option>Referral</option>
+                    <option>Consultation</option>
+                    <option>Lab Test</option>
+                    <option>Vaccination</option>
+                </select>
+            </td>
+            <td><input type="text" placeholder="Enter diagnosis" required></td>
+            <td>
+                <div class="searchable-dropdown">
+                    <input type="text" class="search-input" id="medicationSearch" placeholder="Search medications..." onkeyup="filterMedications()" onkeydown="checkEnter(event)">
+                    <div class="dropdown-list" id="dropdownList"></div>
+                </div>
+            </td>
+            <td>
+                <input type="number" placeholder="Enter quantity" id="medicationQuantity" required onkeydown="checkEnter(event)">
+            </td>
+        </tr>
+    </table>
+
+    <button class="scan-report-button" onclick="addMedication()">Add Medication</button>
+
+    <div class="selected-medications">
+        <h2>Selected Medications</h2>
+        <table id="medicationTable">
+            <tr>
+                <th>Medication</th>
+                <th>Quantity</th>
+            </tr>
+        </table>
+    </div>
+
+    <button class="scan-report-button" onclick="openScanReport()">Open Scan Report</button>
+
+    <script>
+        const medications = [
+            "Paracetamol 500 mg",
+            "Paracetamol 650 mg",
+            "Ibuprofen 200 mg",
+            "Ibuprofen 400 mg",
+            "Diclofenac 50 mg",
+            "Amoxicillin 250 mg",
+            "Azithromycin 250 mg",
+            "Ciprofloxacin 250 mg",
+            "Doxycycline 100 mg",
+            "Metronidazole 250 mg",
+            "Aspirin 75 mg",
+            "Aspirin 325 mg",
+            "Cetirizine 10 mg",
+            "Loratadine 10 mg",
+            "Levocetirizine 5 mg",
+            "Ranitidine 150 mg",
+            "Omeprazole 20 mg",
+            "Simvastatin 20 mg",
+            "Atorvastatin 10 mg",
+            "Metformin 500 mg",
+            "Lisinopril 10 mg",
+            "Amlodipine 5 mg",
+            "Hydrochlorothiazide 25 mg",
+            "Furosemide 40 mg",
+            "Albuterol 90 mcg",
+            "Sertraline 50 mg",
+        ];
+
+        function filterMedications() {
+            const input = document.getElementById('medicationSearch');
+            const filter = input.value.toLowerCase();
+            const dropdown = document.getElementById('dropdownList');
+            dropdown.innerHTML = '';
+
+            const filteredMedications = medications.filter(med => med.toLowerCase().includes(filter));
+
+            if (filteredMedications.length) {
+                dropdown.style.display = 'block';
+                filteredMedications.forEach(med => {
+                    const item = document.createElement('div');
+                    item.textContent = med;
+                    item.className = 'dropdown-item';
+                    item.onclick = () => selectMedication(med);
+                    dropdown.appendChild(item);
+                });
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        function checkEnter(event) {
+            if (event.key === 'Enter') {
+                addMedication();
+            }
+        }
+
+        function selectMedication(medication) {
+            const input = document.getElementById('medicationSearch');
+            input.value = medication;
+
+            // Clear dropdown
+            const dropdown = document.getElementById('dropdownList');
+            dropdown.style.display = 'none';
+        }
+
+        function addMedication() {
+            const selectedMedication = document.getElementById('medicationSearch').value;
+            const quantity = document.getElementById('medicationQuantity').value;
+
+            if (selectedMedication && quantity) {
+                const table = document.getElementById('medicationTable');
+                const row = table.insertRow();
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+
+                cell1.textContent = selectedMedication;
+                cell2.textContent = quantity;
+
+                // Clear the input fields
+                document.getElementById('medicationSearch').value = '';
+                document.getElementById('medicationQuantity').value = '';
+                document.getElementById('dropdownList').style.display = 'none'; // Hide dropdown
+            }
+        }
+
+        function openScanReport() {
+            window.location.href = 'scan_report.html';
+        }
+    </script>
+
+</body>
+</html>
